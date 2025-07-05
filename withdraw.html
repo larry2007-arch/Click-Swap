@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Withdraw Coins | Click Swap</title>
+ <link rel="icon" href="images/clickswap favicon.png" type="images/clickswap favicon.png">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
+  <div class="bg-white shadow p-6 rounded max-w-md w-full space-y-4">
+    <h2 class="text-2xl font-bold text-center mb-2">💸 Withdraw Coins</h2>
+
+    <div><strong>Logged in as:</strong> <span id="user-email">Loading...</span></div>
+    <div><strong>Available Coins:</strong> <span id="user-coins">0</span></div>
+
+    <input type="number" id="withdrawAmount" placeholder="Amount in ₦" class="w-full p-2 border rounded" />
+    <input type="text" id="accountName" placeholder="Account Name" class="w-full p-2 border rounded" />
+    <input type="text" id="accountNumber" placeholder="Account Number" class="w-full p-2 border rounded" />
+    <input type="text" id="bankName" placeholder="Bank Name" class="w-full p-2 border rounded" />
+
+    <button onclick="submitWithdraw()" class="bg-green-600 text-white w-full py-2 rounded hover:bg-green-700 transition">
+      Request Withdrawal
+    </button>
+
+    <div id="withdrawStatus" class="text-center text-sm text-red-600 mt-2"></div>
+  </div>
+
+  <script>
+    const email = localStorage.getItem("userLogin");
+    document.getElementById("user-email").textContent = email || "Unknown";
+
+    async function loadUserCoins() {
+      try {
+        // Try to get from localStorage first (from game.html)
+        let coins = localStorage.getItem("coinCount");
+
+        if (!coins) {
+          // fallback to backend if not found in localStorage
+          const res = awaitfetch("https://click-swap-backend.onrender.com/user?email=" + encodeURIComponent(email))
+
+          const data = await res.json();
+          coins = data.coins || 0;
+        }
+
+        document.getElementById("user-coins").textContent = coins;
+      } catch (err) {
+        console.error("Error loading user coins:", err);
+        document.getElementById("user-coins").textContent = "Error";
+      }
+    }
+
+    async function submitWithdraw() {
+      const amount = document.getElementById("withdrawAmount").value;
+      const name = document.getElementById("accountName").value.trim();
+      const number = document.getElementById("accountNumber").value.trim();
+      const bank = document.getElementById("bankName").value.trim();
+
+      if (!amount || !name || !number || !bank) {
+        document.getElementById("withdrawStatus").textContent = "Please fill all fields.";
+        return;
+      }
+
+      try {
+        const res = await fetch("https://click-swap-backend.onrender.com/withdraw/request", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            amount: parseInt(amount),
+            name,
+            accountNumber: number,
+            bank
+          })
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.message) {
+          alert("✅ " + data.message);
+          document.getElementById("withdrawStatus").textContent = "";
+        } else {
+          document.getElementById("withdrawStatus").textContent = data.error || "Something went wrong.";
+        }
+      } catch (error) {
+        console.error("Withdrawal error:", error);
+        document.getElementById("withdrawStatus").textContent = "Failed to send request. Please try again later.";
+      }
+    }
+
+    window.onload = loadUserCoins;
+  </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head><title>Click Swap | Your Referral</title><link rel="icon" href="images/clickswap favicon.png" type="images/clickswap favicon.png">
+  <style>
+    body{
+      background-color: deepskyblue;
+    }
+    .ref-body{
+      width: 350px;
+      height: 420px;
+      background-color: rgb(17, 15, 15);
+      margin: auto;
+      border-radius: 4%;
+      text-align: center;
+      padding: 2%;
+      color: aliceblue;
+    }
+  </style>
+</head>
+<body>
+  <div class="ref-body">  <h2>Your Referral Link</h2>
+  <input type="text" id="link" readonly>
+  <button onclick="copyLink()">Copy</button>
+
+  <p>Your Referrals: <span id="count">0</span></p>
+  <p>Your Coins: <span id="coins">0</span></p>
+  <a href="game.html" style="color: gold;"><p><h3>Back to Game </h3></p></a>
+</div>
+
+  <script>
+    const userId = "685d6655f9cb6ddb70790877"; // replace with real ID from database
+    const baseURL = "https://click-swap-backend.onrender.com/signup.html?ref=" + userId;
+    document.getElementById("link").value = baseURL;
+
+    async function loadInfo() {
+      const res = await fetch(`https://click-swap-backend.onrender.com/id/user/${userId}`);
+      const user = await res.json();
+      document.getElementById("count").textContent = user.referrals;
+      document.getElementById("coins").textContent = user.coins;
+    }
+
+    function copyLink() {
+      const input = document.getElementById("link");
+      input.select();
+      document.execCommand("copy");
+      alert("Referral link copied!");
+    }
+
+    loadInfo();
+  </script>
+</body>
+</html>

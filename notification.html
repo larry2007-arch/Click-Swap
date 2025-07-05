@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Notifications | Click Swap</title><link rel="icon" href="images/clickswap favicon.png" type="images/clickswap favicon.png">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100 p-6">
+  <h1 class="text-2xl font-bold mb-4">🔔 Your Notifications</h1>
+  <button onclick="markAllAsRead()" class="mb-4 bg-green-600 text-white px-4 py-2 rounded">
+  ✅ Mark All as Read
+</button>
+
+  <div id="userNotifications" class="space-y-2" style="color: black;" >
+    <p>No notifications yet</p></div>
+
+
+
+    
+  <script>
+// app.get("/notifications/user", async (req, res) => {
+//   try {
+//     const notifications = await UserNotification.find().sort({ createdAt: -1 });
+//     res.json({ notifications });
+//   } catch (err) {
+//     res.status(500).json({ message: "Failed to load user notifications" });
+//   }
+// });
+
+
+//     fetchfetch("http://localhost:5000/notifications/user")
+//       .then(res => res.json())
+//       .then(data => {
+//         const container = document.getElementById("notifications");
+//         if (data.notifications.length === 0) {
+//           container.innerHTML = "<p>No notifications yet.</p>";
+//           return;
+//         }
+
+//         container.innerHTML = data.notifications.map(msg => `
+//           <div class="bg-white p-3 rounded shadow">
+//             <p>${msg.message}</p>
+//             <small class="text-gray-500">${new Date(msg.createdAt).toLocaleString()}</small>
+//           </div>
+//         `).join("");
+//       });
+//       const Notification = mongoose.model("Notification", new mongoose.Schema({
+//   message: String
+// }, { timestamps: true })); // ✅ Enables createdAt
+
+
+
+
+  fetch("https://click-swap-backend.onrender.com/notifications/user")
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("userNotifications");
+      if (data.notifications.length === 0) {
+        container.innerHTML = "<p>No notifications available.</p>";
+      } else {
+        container.innerHTML = data.notifications.map(n => {
+          const date = new Date(n.createdAt).toLocaleDateString("en-GB");
+          return `<div class="p-2 border bg-yellow-100 rounded">
+            <strong>${date}</strong>: ${n.message}
+          </div>`;
+        }).join("");
+      }
+    })
+    .catch(err => {
+      document.getElementById("userNotifications").innerText = "❌ Failed to load notifications.";
+    });
+        
+     
+
+
+      
+  function markAllAsRead() {
+    fetch("https://click-swap-backend.onrender.com/notifications/user/mark-all-read", {
+      method: "POST"
+    })
+    .then(res => res.json())
+    .then(data => {
+      alert(data.message || "Marked as read!");
+      location.reload(); // Refresh page
+    });
+  }
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Signup | Click Swap</title><link rel="icon" href="images/clickswap favicon.png" type="images/clickswap favicon.png">
+  <style>
+    body {
+      background-image: url(images/click.png);
+      background-repeat: no-repeat;
+      background-clip: content-box;
+      background-color: deepskyblue;
+    }
+
+    .container {
+      text-align: center;
+      margin-top: 100px;
+
+    }
+
+    input,
+    button {
+      padding: 10px;
+      margin-top: 10px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: gold;
+      border: solid deepskyblue;
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1> Welcome to Click Swap </h1>
+    <p style="color: black; font-size:30px;">Sign in to start earning coins 💰</p>
+    <button id="google-login">Continue with Google</button>
+        <!-- <input type="email" id="email" placeholder="Enter your email" /> -->
+<!-- <button id="email-login">Continue with Email</button> -->
+
+  
+  </div>
+
+  <!-- ✅ Firebase SDK (for browser use, compat version) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAEjumHVX2EowdposOeOv1xFJFs25eHqxM",
+      authDomain: "click-swap.firebaseapp.com",
+      projectId: "click-swap",
+      storageBucket: "click-swap.firebasestorage.app",
+      messagingSenderId: "459607732818",
+      appId: "1:459607732818:web:2bfd1d1740a25adc95e58b",
+      measurementId: "G-GF9T2FG8Q5"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    const googleBtn = document.getElementById("google-login");
+    
+
+    // Google Sign-In
+    googleBtn.addEventListener("click", () => {
+      auth.signInWithPopup(provider)
+        .then((result) => {
+          const user = result.user;
+          localStorage.setItem("userLogin", user.displayName || user.email);
+          window.location.assign("game.html");
+
+        })
+        .catch((error) => {
+          alert("Login failed: " + error.message);
+        });
+    });
+
+
+  // Get referrer from URL and store in localStorage
+  const urlParams = new URLSearchParams(window.location.search);
+  const ref = urlParams.get("ref");
+  if (ref) {
+    localStorage.setItem("referrer", ref);
+  }
+
+  // On signup
+  document.getElementById("email-login").addEventListener("click", async () => {
+    const email = document.getElementById("email").value.trim();
+    const referrer = localStorage.getItem("referrer");
+
+    if (!email) return alert("Please enter a valid email");
+
+    const response = await fetch("https://click-swap-backend.onrender.com/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, referrer })
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      localStorage.setItem("userLogin", email);
+      window.location.href = "game.html";
+    } else {
+      alert(result.message || "Signup failed");
+    }
+  });
+
+
+
+
+  </script>
+</body>
+
+</html>

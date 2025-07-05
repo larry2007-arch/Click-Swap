@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Click Swap | Leaderboard Rank</title><link rel="icon" href="images/clickswap favicon.png" type="images/clickswap favicon.png">
+
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+  <div class="bg-white p-6 rounded shadow text-center w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-4">🏆 Your Weekly Leaderboard Rank</h2>
+    <p id="rank" class="text-xl mb-2">Loading...</p>
+    <p id="referrals" class="mb-2 text-gray-700"></p>
+    <p id="tier" class="text-lg"></p>
+
+    <!-- TOP 10 Preview -->
+<div class="mt-8">
+  <h3 class="text-xl font-bold mb-2">🏆 Top 10 Referrers This Week</h3>
+  <table class="w-full text-left border-collapse text-sm">
+    <thead class="bg-gray-200">
+      <tr>
+        <th class="p-2">#</th>
+        <th class="p-2">Email</th>
+        <th class="p-2">Referrals</th>
+      </tr>
+    </thead>
+    <tbody id="top10Table" class="bg-white"></tbody>
+  </table>
+</div>
+  </div>
+
+
+  <script>
+    const email = localStorage.getItem("userLogin");
+    if (!email) {
+      alert("Login required!");
+      window.location.href = "login.html";
+    }
+
+    async function loadRank() {
+      const res = await fetch(`https://click-swap-backend.onrender.com/user/rank?email=${encodeURIComponent(email)}`);
+      const data = await res.json();
+
+      document.getElementById("rank").textContent = data.rank
+        ? `You’re ranked #${data.rank} out of ${data.totalUsers}`
+        : "Not ranked yet this week.";
+
+      document.getElementById("referrals").textContent =
+        `Referrals this week: ${data.referrals}`;
+
+      document.getElementById("tier").innerHTML = {
+        "Gold": "🥇 <span class='text-yellow-500 font-bold'>Gold Tier</span>",
+        "Silver": "🥈 <span class='text-gray-500 font-semibold'>Silver Tier</span>",
+        "Bronze": "🥉 <span class='text-orange-500 font-medium'>Bronze Tier</span>",
+        "None": "⚪ <span class='text-gray-400'>No Tier Yet</span>"
+      }[data.tier];
+    }
+                  async function loadTop10() {
+  const res = await fetch("https://click-swap-backend.onrender.com/leaderboard/top10");
+  const data = await res.json();
+
+  const tbody = document.getElementById("top10Table");
+  tbody.innerHTML = data.leaderboard.map((user, index) => `
+    <tr class="border-b">
+      <td class="p-2 font-semibold">${index + 1}</td>
+      <td class="p-2">${user.email}</td>
+      <td class="p-2">${user.referrals}</td>
+    </tr>
+  `).join("");
+}
+
+
+    loadRank(); loadTop10();
+
+  </script>
+</body>
+</html>

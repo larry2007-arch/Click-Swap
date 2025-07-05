@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Withdraw History | Click Swap</title><link rel="icon" href="images/clickswap favicon.png" type="images/clickswap favicon.png">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+  <div class="w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-4 text-center">💳 Withdraw History</h1>
+
+    <!-- Public Withdrawal Notification -->
+    <div id="publicNotice" class="hidden bg-yellow-100 text-center p-2 rounded shadow mb-4 text-sm"></div>
+
+    <!-- Withdraw History List -->
+    <div id="withdrawHistory" class="bg-white p-4 rounded shadow space-y-3 text-sm" style="margin-bottom: 100%;">Loading...</div>
+  </div>
+
+  <script>
+    const email = localStorage.getItem("userLogin");
+
+    async function loadWithdrawHistory() {
+      const res = await fetch("https://click-swap-backend.onrender.com/withdraw/history?email=" + encodeURIComponent(email));
+      const data = await res.json();
+      const container = document.getElementById("withdrawHistory");
+
+      if (!data.history || data.history.length === 0) {
+        container.innerHTML = "<p>No withdrawal history yet.</p>";
+        return;
+      }
+
+      container.innerHTML = data.history.map(item => {
+        const dateObj = new Date(item.createdAt);
+        const formattedDate = isNaN(dateObj)
+  ? "Unknown Date"
+  : `${String(dateObj.getDate()).padStart(2, '0')}/${String(dateObj.getMonth() + 1).padStart(2, '0')}/${dateObj.getFullYear()}`;
+
+
+        return `
+          <div class="border p-2 rounded bg-gray-50">
+            <div><strong>Amount:</strong> ₦${item.amount}</div>
+            <div><strong>Status:</strong> ${item.status}</div>
+            <div><strong>Date:</strong> ${formattedDate}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    async function checkBonus() {
+      const res = await fetch("https://click-swap-backend.onrender.com/bonus/check?email=" + encodeURIComponent(email));
+      const data = await res.json();
+      if (data.bonus) {
+        alert("🎉 You’ve been selected for a bonus!");
+      }
+    }
+
+    async function loadPublicWithdrawalNotice() {
+      const res = await fetch("https://click-swap-backend.onrender.com/public/latest-withdrawal");
+      const data = await res.json();
+      if (data.message) {
+        const notice = document.getElementById("publicNotice");
+        notice.textContent = data.message;
+        notice.classList.remove("hidden");
+      }
+    }
+
+    window.onload = () => {
+      loadWithdrawHistory();
+      checkBonus();
+      loadPublicWithdrawalNotice();
+    };
+  </script>
+</body>
+</html>
