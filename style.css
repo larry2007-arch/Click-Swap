@@ -1,118 +1,285 @@
- 
-    body {
-      
+/* === Global Styles === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-      font-family: Arial, sans-serif;
-      background-color: white;
-      margin: 0;
-      padding: 0;
+body {
+  background-color: white;
+  font-family: Arial, sans-serif;
+}
 
+/* === Header === */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: white;
+  width: 100%;
+  max-width: 1358px;
+  height: 100px;
+  outline: 3px solid grey;
+  margin: 0 auto 10px auto;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 
+.e1-row {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  width: 100%;
+  flex-wrap: wrap; /* keeps it responsive on smaller screens */
+}
 
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      background-color: white;
-      width: 1358px;
-      height: 100px;
-      outline: 3px solid grey;
-      margin-bottom: 4px;
-      gap: 5%;
-      position: relative;
-     
-
-    }
-
-    .e1 {
-      width: 164px;
-      height: 90px;
-      background-color: rgb(28, 26, 26);
-      border-radius: 30px;
-      text-align: center;
-      color: white;
-
-
-
-    }
-
-
-    #click-coin {
-      width: 350px;
-      height: 350px;
-
-    }
-
-    main {
-      width: 440px;
-      height: 620px;
-      background-color: rgb(28, 27, 25);
-      border-radius: 3%;
-      display: grid;
-      align-items: center;
-      margin-top: 20px;
-      margin-left: 450px;
-      box-shadow: 0 6px 12px;
-      text-align: center;
-      font-family: 'Gill Sans', 'Gill Sans MT';
+.e1 {
+  width: 160px;
+  height: 90px;
+  background-color: rgb(28, 26, 26);
+  border-radius: 30px;
+  text-align: center;
+  color: white;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
 
 
+/* === Welcome Area === */
+.wel {
+  text-align: center;
+  margin: 10px;
+}
 
-    }
+/* === Main Coin Game Area === */
+.container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+main {
+  width: 90%;
+  max-width: 440px;
+  height: 620px;
+  background-color: rgb(28, 27, 25);
+  border-radius: 3%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  padding-top: 30px;
+  text-align: center;
+  font-family: 'Gill Sans', 'Gill Sans MT', sans-serif;
+}
+
+.wallet {
+  font-size: 40px;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin-bottom: 30px;
+}
+
+#click-coin {
+  width: 350px;
+  height: 350px;
+  max-width: 80%;
+  object-fit: contain;
+}
+
+/* === Floating +1 Animation === */
+.plus-one {
+  position: fixed;
+  color: gold;
+  font-size: 18px;
+  font-weight: bold;
+  opacity: 1;
+  animation: tapFloat 0.8s ease-out forwards;
+  pointer-events: none;
+  z-index: 999;
+}
+
+@keyframes tapFloat {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-25px);
+    opacity: 0;
+  }
+}
+
+/* === Notification Bar + Bell === */
+.fb {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  flex-wrap: wrap;
+}
+
+/* === Navigation Box === */
+nav {
+  margin: 20px auto;
+  width: 90%;
+  max-width: 300px;
+  height: auto;
+  outline: 2px solid black;
+  font-family: fantasy;
+  text-align: center;
+  font-size: x-large;
+  color: gold;
+  
+  background-color: #f8f8f8;
+  border-radius: 10px;
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+  header {
+    justify-content: center;
+  }
+
+  .e1 {
+    width: 140px;
+    height: 80px;
+    margin: 5px;
+  }
+
+  main {
+    width: 95%;
+    height: auto;
+    padding: 20px 0;
+  }
+
+  #click-coin {
+    width: 200px;
+    height: 200px;
+  }
+
+  nav {
+    width: 90%;
+    font-size: large;
+  }
+
+  .wallet {
+    font-size: 30px;
+  }
+}
+
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
 
 
-    .wallet {
-      font-size: 40px;
-      color: white;
-      font-family: Verdana, Geneva, Tahoma, sans-serif;
-      margin-top: 80px;
-    }
 
-    .wel {
-      text-align: center;
-      
-    }
+.e1-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  border: 2px solid gray;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
 
-    .plus-one {
-      position: fixed;
-      color: gold;
-      font-size: 18px;
-      font-weight: bold;
-      opacity: 1;
-      animation: tapFloat 0.8s ease-out forwards;
-      pointer-events: none;
-      z-index: 999;
-    }
+.game-area {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-    @keyframes tapFloat {
-      0% {
-        transform: translateY(0);
-        opacity: 1;
-      }
 
-      100% {
-        transform: translateY(-25px);
-        opacity: 0;
-      }
-    }
+/* Layout Setup */
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+}
 
-    nav {
-      position: fixed;
-      width: 300px;
-      height: 370px;
-      outline: 2px solid black;
-      font-family: fantasy;
-      text-align: center;
-      font-size: x-large;
-      color: gold;
-      /* margin-bottom: 20px;  */
-      padding-top: 2%;
-      
+/* Notification bar stays top */
+.notification-bar {
+  font-weight: bold;
+  font-size: 14px;
+  padding: 10px;
+  border: 2px solid gray;
+}
 
-    }
-    .fb{
-      display: flex;
-      gap: 50%;
-    }
+/* Bell in top-right corner */
+.bell {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+.bell span {
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+}
+
+/* Reward box row (e1) */
+.e1-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+/* Navigation */
+nav {
+  width: 240px;
+  height: auto;
+  border: 2px solid black;
+  font-family: fantasy;
+  font-size: large;
+  text-align: center;
+  color: gold;
+  margin-top: 80px;
+}
+
+/* Welcome */
+.wel {
+  text-align: center;
+  margin-top: 10px;
+}
+
+
+main {
+  width: 440px;
+  height: 620px;
+  background-color: rgb(28, 27, 25);
+  border-radius: 3%;
+  margin-right: 400px;
+  margin-top:80px;
+  box-shadow: 0 6px 12px;
+  text-align: center;
+  font-family: 'Gill Sans', 'Gill Sans MT';
+}
+
+/* Reward Boxes */
+.e1 {
+  width: 160px;
+  height: 90px;
+  background-color: rgb(28, 26, 26);
+  border-radius: 30px;
+  text-align: center;
+  color: white;
+  padding: 5px;
+}
+
