@@ -125,7 +125,7 @@ main {
 
 /* === Navigation Box === */
 nav {
-  width: 90%;
+ width:auto;
   max-width: 300px;
   height: auto;
   outline: 2px solid black;
