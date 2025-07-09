@@ -47,6 +47,10 @@ header {
   justify-content: center;
   font-size: 14px;
 }
+.e1-row{
+  display: flex;
+  gap:5%;
+}
 
 /* Bell */
 .bell {
