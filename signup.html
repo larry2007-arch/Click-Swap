@@ -61,9 +61,7 @@
       display: inline-block;
       margin: 0 5px;
     }
-      t:hover{
-        text-decoration: underline;
-      }
+
     /* Media Queries for Responsive Design */
     @media screen and (max-width: 768px) {
       .container {
@@ -170,7 +168,7 @@
     <h1>Welcome to Click Swap</h1>
     <p style="color: black; font-size:30px;">Sign in to start earning coins 💰</p>
     <button id="google-login"> <strong>Continue</strong><br><strong> with</strong><br><strong> Google</strong>
-    </button> <br><br><br>
+    </button><br> <br> <br>
     
 
     <footer>
@@ -207,8 +205,26 @@
     const auth = firebase.auth();
     const provider = new firebase.auth.GoogleAuthProvider();
 
-    const googleBtn = document.getElementById("google-login");
-    const emailBtn = document.getElementById("email-login");
+    // Check if user is already logged in
+    function checkAuthAndRedirect() {
+      // Check Firebase auth state for Google Sign-In
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          // User is logged in via Google, redirect to game.html
+          window.location.assign("game.html");
+        } else {
+          // Check localStorage for email signup
+          const userLogin = localStorage.getItem("userLogin");
+          if (userLogin) {
+            // User has signed up via email, redirect to game.html
+            window.location.assign("game.html");
+          }
+        }
+      });
+    }
+
+    // Run auth check on page load
+    window.onload = checkAuthAndRedirect;
 
     // Function to derive username from email
     function deriveUsername(email) {
@@ -221,6 +237,7 @@
     }
 
     // Google Sign-In
+    const googleBtn = document.getElementById("google-login");
     googleBtn.addEventListener("click", () => {
       auth.signInWithPopup(provider)
         .then((result) => {
@@ -236,6 +253,7 @@
     });
 
     // Email Sign-In
+    const emailBtn = document.getElementById("email-login");
     emailBtn.addEventListener("click", async () => {
       const email = document.getElementById("email").value.trim();
       const referrer = localStorage.getItem("referrer");
