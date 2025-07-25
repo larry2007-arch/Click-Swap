@@ -182,12 +182,12 @@ nav {
   .bell {
     right: 10px;
     top: 10px;
-  }
 }
 footer{
     background-color: black;
     height: 630px;
     color: white;
+    text-align: center;
 
 }
 @media (max-width:768px) {
