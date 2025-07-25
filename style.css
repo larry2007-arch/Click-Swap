@@ -184,3 +184,19 @@ nav {
     top: 10px;
   }
 }
+footer{
+    background-color: black;
+    height: 630px;
+    color: white;
+
+}
+@media (max-width:768px) {
+    
+}
+
+@media (max-width:600px) {
+    
+}
+@media (max-width:992px) {
+    
+}
