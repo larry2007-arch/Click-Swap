@@ -5,13 +5,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f0f0f0; margin: 0; padding: 0; }
-        .container { max-width: 400px; margin: 50px auto; padding: 20px; background-color: #fff; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); text-align: center; }
-        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; }
-        button { padding: 10px; background-color: gold; color: #fff; border: none; border-radius: 50px; cursor: pointer;  margin: 100px; height:60px;   }
-        button:hover { background-color: chartreuse; }
-        a { color: #007bff; text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px;
+            background-color: #FFD700; /* Gold */
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px auto;
+            height: 40px;
+            width: 200px;
+            display: block;
+        }
+        button:hover {
+            background-color: #7FFF00; /* Chartreuse */
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Media Queries */
+        @media screen and (max-width: 600px) {
+            .container {
+                max-width: 90%;
+                margin: 20px auto;
+                padding: 15px;
+            }
+            input {
+                padding: 8px;
+                font-size: 14px;
+([
+            button {
+                width: 150px;
+                height: 35px;
+                font-size: 14px;
+            }
+        }
+
+        @media screen and (min-width: 601px) and (max-width: 900px) {
+            .container {
+                max-width: 500px;
+                padding: 20px;
+            }
+            button {
+                width: 180px;
+                height: 38px;
+            }
+        }
+
+        @media screen and (min-width: 901px) {
+            .container {
+                max-width: 400px;
+            }
+            button {
+                width: 200px;
+                height: 40px;
+            }
+        }
     </style>
 </head>
 <body>
