@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Swap - Missions</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Missions</h1>
+        <nav>
+            <a href="game.html">Game</a>
+            <a href="referral.html">Referrals</a>
+            <a href="RequestWithdraw.html">Withdraw</a>
+            <a href="missions.html">Missions</a>
+        </nav>
+        <div id="missions-list">
+            <div class="mission">
+                <h3>Daily Login Bonus</h3>
+                <p>Earn 50 coins for logging in today!</p>
+                <button id="daily-login-btn" onclick="claimDailyLogin()">Claim</button>
+                <p id="daily-login-status"></p>
+            </div>
+            <div class="mission">
+                <h3>Video Watching Mission</h3>
+                <p>Watch a video to earn 100 coins!</p>
+                <button id="video-watch-btn" onclick="watchVideo()">Watch Video</button>
+                <p id="video-watch-status"></p>
+            </div>
+            <div class="mission">
+                <h3>Click Streak Challenge</h3>
+                <p>Click 100 times in a session to earn 200 coins!</p>
+                <button id="click-streak-btn" onclick="checkClickStreak()">Check Progress</button>
+                <p id="click-streak-status"></p>
+            </div>
+        </div>
+        <p>Total Coins: <span id="total-coins">0</span></p>
+    </div>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .mission {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .mission h3 {
+            margin: 0 0 10px;
+            color: #333;
+        }
+        .mission p {
+            margin: 0 0 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+
+    <script>
+        let totalCoins = 0;
+        let clickCount = 0;
+
+        async function fetchUserData() {
+            const response = await fetch('/api/user', { method: 'GET', credentials: 'include' });
+            const data = await response.json();
+            totalCoins = data.coins || 0;
+            document.getElementById('total-coins').textContent = totalCoins;
+            checkMissionStatus();
+        }
+
+        async function checkMissionStatus() {
+            const response = await fetch('/api/missions/status', { method: 'GET', credentials: 'include' });
+            const status = await response.json();
+            if (status.dailyLoginCompleted) {
+                document.getElementById('daily-login-btn').disabled = true;
+                document.getElementById('daily-login-status').textContent = 'Completed for today!';
+            }
+            if (status.videoWatched) {
+                document.getElementById('video-watch-btn').disabled = true;
+                document.getElementById('video-watch-status').textContent = 'Video watched!';
+            }
+            document.getElementById('click-streak-status').textContent = `Current clicks: ${status.clickCount}/100`;
+            if (status.clickStreakCompleted) {
+                document.getElementById('click-streak-btn').disabled = true;
+                document.getElementById('click-streak-status').textContent += ' - Completed!';
+            }
+        }
+
+        async function claimDailyLogin() {
+            const response = await fetch('/api/missions/daily-login', { method: 'POST', credentials: 'include' });
+            const result = await response.json();
+            if (result.success) {
+                totalCoins += 50;
+                document.getElementById('total-coins').textContent = totalCoins;
+                document.getElementById('daily-login-btn').disabled = true;
+                document.getElementById('daily-login-status').textContent = 'Completed for today!';
+            } else {
+                alert(result.message);
+            }
+        }
+
+        async function watchVideo() {
+            // Placeholder for video ad integration (e.g., Google AdSense)
+            const response = await fetch('/api/missions/watch-video', { method: 'POST', credentials: 'include' });
+            const result = await response.json();
+            if (result.success) {
+                totalCoins += 100;
+                document.getElementById('total-coins').textContent = totalCoins;
+                document.getElementById('video-watch-btn').disabled = true;
+                document.getElementById('video-watch-status').textContent = 'Video watched!';
+            } else {
+                alert(result.message);
+            }
+        }
+
+        async function checkClickStreak() {
+            const response = await fetch('/api/missions/click-streak', { method: 'POST', credentials: 'include' });
+            const result = await response.json();
+            document.getElementById('click-streak-status').textContent = `Current clicks: ${result.clickCount}/100`;
+            if (result.success) {
+                totalCoins += 200;
+                document.getElementById('total-coins').textContent = totalCoins;
+                document.getElementById('click-streak-btn').disabled = true;
+                document.getElementById('click-streak-status').textContent += ' - Completed!';
+            }
+        }
+
+        // Initialize
+        fetchUserData();
+    </script>
+</body>
+</html>
