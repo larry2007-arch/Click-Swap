@@ -17,7 +17,7 @@
         <div id="missions-list">
             <div class="mission">
                 <h3>Daily Login Bonus</h3>
-                <p>Earn 50 coins for logging in today!</p>
+                <p>Earn 50-200 coins for logging in today!</p>
                 <button id="daily-login-btn" onclick="claimDailyLogin()">Claim</button>
                 <p id="daily-login-status"></p>
             </div>
@@ -106,15 +106,33 @@
         let clickCount = 0;
 
         async function fetchUserData() {
-            const response = await fetch('/api/user', { method: 'GET', credentials: 'include' });
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Please log in');
+                window.location.href = 'login.html'; // Redirect to login page
+                return;
+            }
+            const response = await fetch('/api/user', {
+                method: 'GET',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
             const data = await response.json();
-            totalCoins = data.coins || 0;
-            document.getElementById('total-coins').textContent = totalCoins;
-            checkMissionStatus();
+            if (data.coins) {
+                totalCoins = data.coins;
+                document.getElementById('total-coins').textContent = totalCoins;
+                checkMissionStatus();
+            } else {
+                alert('Please log in');
+                window.location.href = 'login.html';
+            }
         }
 
         async function checkMissionStatus() {
-            const response = await fetch('/api/missions/status', { method: 'GET', credentials: 'include' });
+            const token = localStorage.getItem('token');
+            const response = await fetch('/api/missions/status', {
+                method: 'GET',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
             const status = await response.json();
             if (status.dailyLoginCompleted) {
                 document.getElementById('daily-login-btn').disabled = true;
@@ -132,24 +150,31 @@
         }
 
         async function claimDailyLogin() {
-            const response = await fetch('/api/missions/daily-login', { method: 'POST', credentials: 'include' });
+            const token = localStorage.getItem('token');
+            const response = await fetch('/api/missions/daily-login', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
             const result = await response.json();
             if (result.success) {
-                totalCoins += 50;
+                totalCoins = result.coins;
                 document.getElementById('total-coins').textContent = totalCoins;
                 document.getElementById('daily-login-btn').disabled = true;
-                document.getElementById('daily-login-status').textContent = 'Completed for today!';
+                document.getElementById('daily-login-status').textContent = result.message;
             } else {
                 alert(result.message);
             }
         }
 
         async function watchVideo() {
-            // Placeholder for video ad integration (e.g., Google AdSense)
-            const response = await fetch('/api/missions/watch-video', { method: 'POST', credentials: 'include' });
+            const token = localStorage.getItem('token');
+            const response = await fetch('/api/missions/watch-video', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
             const result = await response.json();
             if (result.success) {
-                totalCoins += 100;
+                totalCoins = result.coins;
                 document.getElementById('total-coins').textContent = totalCoins;
                 document.getElementById('video-watch-btn').disabled = true;
                 document.getElementById('video-watch-status').textContent = 'Video watched!';
@@ -159,11 +184,15 @@
         }
 
         async function checkClickStreak() {
-            const response = await fetch('/api/missions/click-streak', { method: 'POST', credentials: 'include' });
+            const token = localStorage.getItem('token');
+            const response = await fetch('/api/missions/click-streak', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
             const result = await response.json();
             document.getElementById('click-streak-status').textContent = `Current clicks: ${result.clickCount}/100`;
             if (result.success) {
-                totalCoins += 200;
+                totalCoins = result.coins;
                 document.getElementById('total-coins').textContent = totalCoins;
                 document.getElementById('click-streak-btn').disabled = true;
                 document.getElementById('click-streak-status').textContent += ' - Completed!';
