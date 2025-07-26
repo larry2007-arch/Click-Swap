@@ -123,10 +123,10 @@
   </div>
      <!-- navigation area -->
   <nav>
-    <a href="withdraw.html" style="text-decoration: none;">check withdrawal </a> 
+    <a href="withdraw.html" style="text-decoration: none;">Request withdrawal </a> 
      <p> <a href="referral.html" style="text-decoration: none;" >  Refer & Earn</a></p>
-               <a href="leaderboard.html"> View My Leaderboard Rank</a>
-
+       <a href="leaderboard.html"> View My Leaderboard Rank</a>
+           <a href="missions.html"> View My  Missions</a>
  
      
 
@@ -223,7 +223,14 @@
         
   const userEmail = localStorage.getItem("userLogin");
 
- 
+ async function handleClick() {
+    const response = await fetch('/api/game/click', { method: 'POST', credentials: 'include' });
+    const result = await response.json();
+    if (result.success) {
+        // Update UI with new click count or coins
+        document.getElementById('total-coins').textContent = result.coins || totalCoins;
+    }
+}
 
 
 </script>
