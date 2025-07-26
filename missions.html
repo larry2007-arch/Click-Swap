@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Click Swap - Missions</title>  <link rel="icon" href="images/clickswap favicon.png" type="images/clickswap favicon.png">
+    <title>Click Swap - Missions</title>
+    <!-- Google AdSense Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4970744686806954"
+            crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
@@ -11,6 +14,7 @@
         <nav>
             <a href="game.html">Game</a>
             <a href="referral.html">Referrals</a>
+            <a href="RequestWithdraw.html">Withdraw</a>
             <a href="missions.html">Missions</a>
         </nav>
         <div id="missions-list">
@@ -24,6 +28,15 @@
                 <h3>Video Watching Mission</h3>
                 <p>Watch a video to earn 100 coins!</p>
                 <button id="video-watch-btn" onclick="watchVideo()">Watch Video</button>
+                <div id="video-ad-container" style="display: none; margin-top: 10px;">
+                    <!-- clickswapad -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-4970744686806954"
+                         data-ad-slot="3511468584"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                </div>
                 <p id="video-watch-status"></p>
             </div>
             <div class="mission">
@@ -98,6 +111,10 @@
             background-color: #ccc;
             cursor: not-allowed;
         }
+        #video-ad-container {
+            max-width: 100%;
+            overflow: hidden;
+        }
     </style>
 
     <script>
@@ -108,7 +125,7 @@
             const token = localStorage.getItem('token');
             if (!token) {
                 alert('Please log in');
-                window.location.href = 'login.html'; // Redirect to login page
+                window.location.href = 'login.html';
                 return;
             }
             const response = await fetch('/api/user', {
@@ -167,19 +184,47 @@
 
         async function watchVideo() {
             const token = localStorage.getItem('token');
-            const response = await fetch('/api/missions/watch-video', {
-                method: 'POST',
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            const result = await response.json();
-            if (result.success) {
-                totalCoins = result.coins;
-                document.getElementById('total-coins').textContent = totalCoins;
-                document.getElementById('video-watch-btn').disabled = true;
-                document.getElementById('video-watch-status').textContent = 'Video watched!';
-            } else {
-                alert(result.message);
+            if (!token) {
+                alert('Please log in');
+                window.location.href = 'login.html';
+                return;
             }
+
+            // Show ad container
+            const adContainer = document.getElementById('video-ad-container');
+            adContainer.style.display = 'block';
+            document.getElementById('video-watch-btn').disabled = true;
+
+            // Initialize AdSense ad
+            try {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            } catch (e) {
+                console.error('AdSense error:', e);
+                alert('Failed to load ad. Please try again.');
+                adContainer.style.display = 'none';
+                document.getElementById('video-watch-btn').disabled = false;
+                return;
+            }
+
+            // Simulate ad interaction (replace with actual impression/click tracking if needed)
+            setTimeout(async () => {
+                const response = await fetch('/api/missions/watch-video', {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const result = await response.json();
+                if (result.success) {
+                    totalCoins = result.coins;
+                    document.getElementById('total-coins').textContent = totalCoins;
+                    document.getElementById('video-watch-btn').disabled = true;
+                    document.getElementById('video-watch-status').textContent = 'Ad viewed!';
+                    adContainer.style.display = 'none';
+                } else {
+                    alert(result.message);
+                    document.getElementById('video-watch-btn').disabled = false;
+                    adContainer.style.display = 'none';
+                }
+            }, 5000); // Simulate 5-second ad display
         }
 
         async function checkClickStreak() {
