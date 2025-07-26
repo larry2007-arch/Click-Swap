@@ -1,238 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <!-- Basic Meta Tags -->
-<title>Click Swap</title>
-<meta name="description" content="Click Swap is a Nigerian-made play-to-earn game. Click coins, get rewarded, refer friends, and withdraw money.">
-<meta name="keywords" content="Click Swap, earn coins, play and earn, Nigerian game, referral bonus, withdraw money, online money game">
-<meta name="author" content="Click Swap Team">
-<meta name="robots" content="index, follow">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Basic Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Click Swap is a Nigerian-made play-to-earn game. Click coins, get rewarded, refer friends, and withdraw money.">
+    <meta name="keywords" content="Click Swap, earn coins, play and earn, Nigerian game, referral bonus, withdraw money, online money game">
+    <meta name="author" content="Click Swap Team">
+    <meta name="robots" content="index, follow">
+    <!-- Facebook Open Graph (OG) Meta -->
+    <meta property="og:title" content="Click Swap">
+    <meta property="og:description" content="Click Swap is a Nigerian-made play-to-earn game. Click coins, refer friends, and earn real money.">
+    <meta property="og:image" content="https://clickswap.netlify.app/images/click.png">
+    <meta property="og:url" content="https://clickswap.netlify.app">
+    <meta property="og:type" content="website">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Click Swap">
+    <meta name="twitter:description" content="Click coins and earn real money with Click Swap – built for Nigerians!">
+    <meta name="twitter:image" content="https://clickswap.netlify.app/images/click.png">
+    <title>Click Swap</title>
+    <!-- AdSense Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link rel="icon" href="images/clickswap favicon.png" type="image/png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .fb {
+            margin: 10px;
+            font-size: 14px;
+        }
+        .fb a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        .fb a:hover {
+            color: #7FFF00; /* Chartreuse */
+        }
+        header {
+            padding: 10px;
+        }
+        .e1-row {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .e1 {
+            flex: 1 1 150px;
+            margin: 5px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .wel h2 {
+            color: #333;
+            margin: 10px 0;
+        }
+        nav {
+            margin: 10px 0;
+        }
+        nav a {
+            text-decoration: none;
+            color: #007bff;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #7FFF00; /* Chartreuse */
+        }
+        nav p {
+            display: inline;
+            margin: 0 10px;
+        }
+        .wallet {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .coin-container img {
+            width: 150px;
+            cursor: pointer;
+        }
+        .plus-one {
+            position: absolute;
+            color: #FFD700;
+            font-size: 20px;
+            font-weight: bold;
+            animation: float 0.8s ease-out;
+        }
+        @keyframes float {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-50px); }
+        }
+        #notificationBar {
+            background-color: #fefcbf;
+            color: #744210;
+            padding: 10px;
+            font-size: 14px;
+        }
+        #notification-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: red;
+            color: white;
+            padding: 4px 6px;
+            border-radius: 50%;
+            font-size: 12px;
+        }
 
-<!-- Facebook Open Graph (OG) Meta -->
-<meta property="og:title" content="Click Swap">
-<meta property="og:description" content="Click Swap is a Nigerian-made play-to-earn game. Click coins, refer friends, and earn real money.">
-<meta property="og:image" content="https://clickswap.netlify.app/images/click.png"> <!-- Replace with actual image URL -->
-<meta property="og:url" content="https://clickswap.netlify.app">
-<meta property="og:type" content="website">
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Click Swap">
-<meta name="twitter:description" content="Click coins and earn real money with Click Swap – built for Nigerians!">
-<meta name="twitter:image" content="https://clickswap.netlify.app/images/click.png">
-  <title>Click Swap </title>
-
-
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <meta charset="UTF-8">
-  <title>Click Swap</title> <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="images/clickswap favicon.png" type="images/clickswap favicon.png">
-
-  
- 
-
-  
+        /* Media Queries */
+        @media screen and (max-width: 600px) {
+            .e1-row {
+                flex-direction: column;
+            }
+            .e1 {
+                margin: 5px 10px;
+                padding: 8px;
+            }
+            .e1 h3 {
+                font-size: 14px;
+            }
+            .wel h2 {
+                font-size: 18px;
+            }
+            nav a, nav p {
+                display: block;
+                margin: 5px 0;
+                font-size: 14px;
+            }
+            .coin-container img {
+                width: 100px;
+            }
+            .wallet {
+                font-size: 20px;
+            }
+            .fb {
+                font-size: 12px;
+            }
+        }
+        @media screen and (min-width: 601px) and (max-width: 900px) {
+            .e1-row {
+                flex-wrap: wrap;
+            }
+            .e1 {
+                flex: 1 1 120px;
+                margin: 5px;
+                padding: 10px;
+            }
+            .wel h2 {
+                font-size: 20px;
+            }
+            nav a, nav p {
+                font-size: 16px;
+            }
+            .coin-container img {
+                width: 120px;
+            }
+        }
+        @media screen and (min-width: 901px) {
+            .e1-row {
+                flex-wrap: nowrap;
+            }
+            .e1 {
+                flex: 1 1 150px;
+            }
+            .wel h2 {
+                font-size: 24px;
+            }
+            nav a, nav p {
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
-
 <body>
-
-
-<script>
-  // ✅ Show latest notification
-  fetch("https://click-swap-backend.onrender.com/notifications/all")
-    .then(res => res.json())
-    .then(data => {
-      const bar = document.getElementById("notificationBar");
-      if (data.notifications && data.notifications.length > 0) {
-        const latest = data.notifications[0]; // newest message
-        const date = new Date(latest.createdAt).toLocaleDateString('en-GB');
-        bar.innerHTML = `<strong>${date}</strong>: ${latest.message}`;
-        bar.style.display = "block";
-      } else {
-        bar.style.display = "none";
-      }
-    })
-    .catch(err => console.error("❌ Notification load failed:", err));
-
-    
-  
-  // Show general notification count
-  fetch("https://click-swap-backend.onrender.com/notifications/count")
-    .then(res => res.json())
-    .then(data => {
-      const notifCount = document.getElementById("notification-count");
-      const count = data.count || 0;
-      notifCount.textContent = count;
-      notifCount.style.display = count > 0 ? "inline-block" : "none";
-    })
-    .catch(err => console.error("Failed to fetch notification count:", err));
-
-
-
-
-  
-</script>
-
-<div class="fb">
- <div id="notificationBar" style="display:none;" class="bg-yellow-100 text-yellow-800 p-2 text-center font-semibold"></div>
-            <div><a href="https://www.facebook.com/share/1CXJYrd1sT/"><span><img src="https://upload.wikimedia.org/wikipedia/commons/1/16/Facebook-icon-1.png" alt="Facebook Logo" width="15" height="15">
-</span> for more information</a></div>  
-           <a href="https://whatsapp.com/channel/0029Vb6bvH28fewsvZQqNS0A" target="_blank">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Logo" width="20" height="20">
-  Join our WhatsApp Channel
-</a>
-
-</div>
-  
-   <header>
-  <div class="e1-row">
-    <div class="e1">
-      <h3 style="color: coral;">1 coin = ₦0.10</h3>
-      <h3 style="font-size: 14px;">1000 coin = ₦100</h3>
+    <div class="fb">
+        <div id="notificationBar" style="display: none;" class="bg-yellow-100 text-yellow-800 p-2 text-center font-semibold"></div>
+        <div>
+            <a href="https://www.facebook.com/Click-Swap-Ltd-664795879714058">
+                <span><img src="https://upload.wikimedia.org/wikipedia/commons/1/16/Facebook-icon-1.png" alt="Facebook Logo" width="15" height="15"></span>
+                for more information
+            </a>
+        </div>
+        <a href="https://www.whatsapp.com/channel/0029Vb6bvH28fewsvZQqNS0A" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Logo" width="20" height="20">
+            Join our WhatsApp Channel
+        </a>
     </div>
 
-    <div class="e1">
-      <h3 style="color: coral;">Earn Per Tap</h3>
-      <h3>💰+1</h3>
+    <header>
+        <div class="e1-row">
+            <div class="e1">
+                <h3 style="color: coral;">2 coins = ₦1</h3>
+                <h3 style="font-size: 14px;">100 coins = ₦100</h3>
+            </div>
+            <div class="e1">
+                <h3 style="color: coral;">Earn Per Tap</h3>
+                <h3>💰+2</h3>
+            </div>
+            <div class="e1">
+                <h3 style="color: deepskyblue;">Earn Per Referral</h3>
+                <h3>💰+4000</h3>
+            </div>
+            <div class="e1">
+                <h3 style="color: greenyellow;">Earn Per Reward</h3>
+                <h3>💰+100</h3>
+            </div>
+            <div class="e1">
+                <a href="usernotify.html" style="text-decoration: none;">
+                    <h3 style="color: black;">SEE WITHDRAWAL HISTORY</h3>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="wel">
+        <h2>👋 Welcome, <span id="user-name"></span>!</h2>
     </div>
 
-    <div class="e1">
-      <h3 style="color: deepskyblue;">Earn Per Referral</h3>
-      <h3>💰+100</h3>
+    <nav>
+        <a href="#" onclick="goToPage('withdraw_request.html')">Request Withdrawal</a>
+        <p><a href="#" onclick="goToPage">Refer & Earn</a></p>
+        <a href="#" onclick="goToPage('leaderboard.html')">View My Leaderboard Rank</a>
+        <a href="#" onclick="goToPage('missions.html')">Referral Missions</a>
+    </nav>
+
+    <main>
+        <div class="wallet">
+            <p>💰 <span id="total-coins">0</span></p>
+        </div>
+
+        <div class="coin-container">
+            <img src="images/Untitled-11.png" alt="Click Coin" id="click-coin" />
+        </div>
+    </main>
+
+    <!-- Notification Bell -->
+    <div style="position: fixed; top: 18px; right: 18px;">
+        <a href="notification.html" target="_blank" style="position: relative;">
+            🔔
+            <span id="notification-count" style="position:absolute; top:-10px; right:-10px; background:red; color:white; padding:4px 6px; border-radius:50%; font-size:12px;">
+                0
+            </span>
+        </a>
     </div>
 
-    <div class="e1">
-      <h3 style="color: greenyellow;">Earn Per Video</h3>
-      <h3>💰+500</h3>
-    </div>
+    <script>
+        // Fetch user data and set username
+        async function fetchUserData() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.log('No token found');
+                window.location.href = 'login.html';
+                return;
+            }
+            try {
+                const response = await fetch('/api/user', {
+                    method: 'GET',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                if (response.ok && data.username) {
+                    document.getElementById('user-name').textContent = data.username;
+                    document.getElementById('total-coins').textContent = data.coins || 0;
+                } else {
+                    console.error('API error:', data.message);
+                    window.location.href = 'login.html';
+                }
+            } catch (err) {
+                console.error('Fetch error:', err);
+                window.location.href = 'login.html';
+            }
+        }
 
-    <div class="e1">
-      <a href="usernotify.html" style="text-decoration: none;">
-        <h3 style="color: greenyellow;">SEE WITHDRAWAL HISTORY</h3>
-      </a>
-    </div>
-  </div>
+        // Navigation with token check
+        function goToPage(page) {
+            if (localStorage.getItem('token')) {
+                window.location.href = page;
+            } else {
+                alert('Please log in to access this page');
+                window.location.href = 'login.html';
+            }
+        }
 
+        // Notification fetches
+        async function loadNotifications() {
+            try {
+                // Latest notification
+                const latestRes = await fetch('/api/notifications/all');
+                const latestData = await latestRes.json();
+                const bar = document.getElementById('notificationBar');
+                if (latestData.notifications && latestData.notifications.length > 0) {
+                    const latest = latestData.notifications[0];
+                    const date = new Date(latest.createdAt).toLocaleDateString('en-GB');
+                    bar.innerHTML = `<strong>${date}</strong>: ${latest.message}`;
+                    bar.style.display = 'block';
+                } else {
+                    bar.style.display = 'none';
+                }
 
-  </header><br>
-  <div class="wel">
-    <h2>👋 Welcome, <span id="user-name"></span>!</h2>
-  </div>
-     <!-- navigation area -->
-  <nav>
-    <a href="withdraw.html" style="text-decoration: none;">Request withdrawal </a> 
-     <p> <a href="referral.html" style="text-decoration: none;" >  Refer & Earn</a></p>
-       <a href="leaderboard.html"> View My Leaderboard Rank</a><br>
-           <a href="missions.html"> View My  Missions</a>
- 
-     
+                // Notification count
+                const countRes = await fetch('/api/notifications/count');
+                const countData = await countRes.json();
+                const notifCount = document.getElementById('notification-count');
+                const count = countData.count || 0;
+                notifCount.textContent = count;
+                notifCount.style.display = count > 0 ? 'inline-block' : 'none';
 
+                // Unread count
+                const unreadRes = await fetch('/api/notifications/unread-count');
+                const unreadData = await unreadRes.json();
+                notifCount.textContent = unreadData.count || '0';
+            } catch (err) {
+                console.error('Notification fetch failed:', err);
+            }
+        }
 
+        // Coin click handler
+        const coinImg = document.getElementById('click-coin');
+        const coinCountSpan = document.getElementById('total-coins');
+        const coinSound = new Audio('https://cdn.pixabay.com/audio/2024/05/02/pop-up.mp3');
+        coinSound.volume = 0.5;
 
-    
-  </nav>
+        async function handleClick() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Please log in');
+                window.location.href = 'login.html';
+                return;
+            }
 
-  <main>
+            try {
+                coinSound.currentTime = 0;
+                coinSound.play().catch(() => console.error('Sound playback failed'));
 
+                const rect = coinImg.getBoundingClientRect();
+                const startX = rect.left + rect.width / 2;
+                const startY = rect.top + rect.height / 2;
+                showPlusOne(startX, startY - 50);
 
-    <div class="wallet">
-      <p> 💰 <span id="coin-count">0</span></p>
-    </div>
+                const response = await fetch('/api/game/click', {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const result = await response.json();
+                if (result.success) {
+                    coinCountSpan.textContent = result.coins;
+                } else {
+                    alert(result.message || 'Click failed');
+                }
+            } catch (err) {
+                console.error('Click error:', err);
+            }
+        }
 
-    <div class="coin-container">
-      <img src="images/Untitled-2.png" alt="Click Coin" id="click-coin" />
+        function showPlusOne(x, y) {
+            const el = document.createElement('div');
+            el.className = 'plus-one';
+            el.textContent = '+2';
+            el.style.left = `${x}px`;
+            el.style.top = `${y}px`;
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 800);
+        }
 
- 
-    </div>
-    
-  </main>
+        coinImg.addEventListener('click', handleClick);
 
-
-  <!-- Notification Bell -->
-  <div style="position: fixed; top: 18px; right: 18px;">
-    <a href="notification.html" style="position: relative;">
-      🔔
-      <span id="notification-count"
-        style="position:absolute; top:-10px; right:-10px; background:red; color:white; padding:4px 6px; border-radius:50%; font-size:12px;">
-        0
-      </span>
-    </a>
-  
-
-
+        // Initialize
+        fetchUserData();
+        loadNotifications();
+    </script>
 </body>
-
-<script>
-  // Get references
-  const userNameSpan =
-    document.getElementById("user-name").textContent = localStorage.getItem("userLogin");
-  const coinImg = document.getElementById("click-coin");
-  const coinCountSpan = document.getElementById("coin-count");
-
-  // Load coin count from localStorage
-  let coinCount = parseInt(localStorage.getItem("coinCount")) || 0;
-  coinCountSpan.textContent = coinCount;
-
-  // Load sound
-  const coinSound = new Audio("media/pop-331049.mp3");
-  coinSound.volume = 0.9; // Optional: adjust volume (0.0 to 1.0)
-
-
-  // Add click event
-  coinImg.addEventListener("click", () => {
-    coinSound.currentTime = 0;
-    coinSound.play();
-    coinSound.onerror = () => console.error("❌ Could not load sound file.");
-
-    const rect = coinImg.getBoundingClientRect();
-    const startX = rect.left + rect.width / 2;
-    const startY = rect.top + rect.height / 2;
-
-    showPlusOne(startX, startY - 200); // this shows the soft +1
-
-
-
-
-
-    coinCount++;
-    coinCountSpan.textContent = coinCount;
-    localStorage.setItem("coinCount", coinCount);
-  });
-
-  function showPlusOne(x, y) {
-    const el = document.createElement("div");
-    el.className = "plus-one";
-    el.textContent = "+1";
-    el.style.left = `${x}px`;
-    el.style.top = `${y}px`;
-    document.body.appendChild(el);
-    setTimeout(() => el.remove(), 800);
-  }
-
-
-
-  fetch("https://click-swap-backend.onrender.com/notifications/unread-count")
-    .then(res => res.json())
-    .then(data => {
-      const count = data.count || 0;
-      document.getElementById("notification-count").textContent = count;
-    });
-        
-  const userEmail = localStorage.getItem("userLogin");
-
- async function handleClick() {
-    const response = await fetch('/api/game/click', { method: 'POST', credentials: 'include' });
-    const result = await response.json();
-    if (result.success) {
-        // Update UI with new click count or coins
-        document.getElementById('total-coins').textContent = result.coins || totalCoins;
-    }
-}
-
-
-</script>
-
 </html>
