@@ -3,248 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Click Swap - Missions</title>
-    <!-- Google AdSense Script -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4970744686806954"
-            crossorigin="anonymous"></script>
-</head>
-<body>
-    <div class="container">
-        <h1>Missions</h1>
-        <nav>
-            <a href="game.html">Game</a>
-            <a href="referral.html">Referrals</a>
-            <a href="RequestWithdraw.html">Withdraw</a>
-            <a href="missions.html">Missions</a>
-        </nav>
-        <div id="missions-list">
-            <div class="mission">
-                <h3>Daily Login Bonus</h3>
-                <p>Earn 50-200 coins for logging in today!</p>
-                <button id="daily-login-btn" onclick="claimDailyLogin()">Claim</button>
-                <p id="daily-login-status"></p>
-            </div>
-            <div class="mission">
-                <h3>Video Watching Mission</h3>
-                <p>Watch a video to earn 100 coins!</p>
-                <button id="video-watch-btn" onclick="watchVideo()">Watch Video</button>
-                <div id="video-ad-container" style="display: none; margin-top: 10px;">
-                    <!-- clickswapad -->
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-4970744686806954"
-                         data-ad-slot="3511468584"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                </div>
-                <p id="video-watch-status"></p>
-            </div>
-            <div class="mission">
-                <h3>Click Streak Challenge</h3>
-                <p>Click 100 times in a session to earn 200 coins!</p>
-                <button id="click-streak-btn" onclick="checkClickStreak()">Check Progress</button>
-                <p id="click-streak-status"></p>
-            </div>
-        </div>
-        <p>Total Coins: <span id="total-coins">0</span></p>
-    </div>
-
+    <meta name="description" content="Complete missions in Click Swap to earn coins. Watch videos, refer friends, and withdraw rewards.">
+    <meta name="keywords" content="Click Swap, earn coins, missions, Nigerian game, referral bonus, withdraw money">
+    <meta name="author" content="Click Swap Team">
+    <meta property="og:title" content="Click Swap Missions">
+    <meta property="og:description" content="Earn coins by completing missions in Click Swap, a Nigerian play-to-earn game.">
+    <meta property="og:image" content="https://clickswap.netlify.app/images/click.png">
+    <meta property="og:url" content="https://clickswap.netlify.app/missions.html">
+    <title>Click Swap Missions</title>
+    <link rel="icon" href="images/clickswap favicon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #007bff;
-        }
-        nav {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        nav a {
-            margin: 0 10px;
-            text-decoration: none;
-            color: #007bff;
+        .plus-one {
+            position: absolute;
+            color: #FFD700;
+            font-size: 20px;
             font-weight: bold;
+            animation: float 0.8s ease-out;
         }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        .mission {
-            background-color: #f9f9f9;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-        .mission h3 {
-            margin: 0 0 10px;
-            color: #333;
-        }
-        .mission p {
-            margin: 0 0 10px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-        #video-ad-container {
-            max-width: 100%;
-            overflow: hidden;
+        @keyframes float {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-50px); }
         }
     </style>
+</head>
+<body class="bg-gray-100 font-sans text-center">
+    <header class="bg-white shadow p-4">
+        <h1 class="text-2xl font-bold text-gray-800">Click Swap Missions</h1>
+        <p class="text-gray-600">Complete missions to earn coins!</p>
+    </header>
+
+    <nav class="my-4">
+        <a href="game.html" class="text-blue-600 hover:text-green-500 mx-2">Game</a>
+        <a href="referral.html" class="text-blue-600 hover:text-green-500 mx-2">Refer & Earn</a>
+        <a href="withdraw_request.html" class="text-blue-600 hover:text-green-500 mx-2">Withdraw</a>
+        <a href="leaderboard.html" class="text-blue-600 hover:text-green-500 mx-2">Leaderboard</a>
+    </nav>
+
+    <main class="max-w-2xl mx-auto p-4">
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Video Watching Mission</h2>
+            <p class="text-gray-600 mb-4">Watch a video ad for 5 seconds to earn 100 coins!</p>
+            <div id="video-ad-container" class="mb-4">
+                <script type='text/javascript' src='//pl27266576.profitableratecpm.com/e6/be/a7/e6bea71f425dd976fbde67f15d77e1f3.js'></script>
+            </div>
+            <button id="watch-video-btn" class="bg-yellow-400 text-white px-6 py-2 rounded-full hover:bg-green-500" disabled>Watch Video</button>
+            <p id="video-status" class="text-gray-600 mt-2"></p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-semibold mb-4">Shop</h2>
+            <button onclick="buyBoost()" class="bg-yellow-400 text-white px-6 py-2 rounded-full hover:bg-green-500">Buy Double Coins (₦200)</button>
+        </div>
+    </main>
 
     <script>
-        let totalCoins = 0;
-        let clickCount = 0;
-
-        async function fetchUserData() {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                alert('Please log in');
-                window.location.href = 'login.html';
-                return;
-            }
-            const response = await fetch('/api/user', {
-                method: 'GET',
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            const data = await response.json();
-            if (data.coins) {
-                totalCoins = data.coins;
-                document.getElementById('total-coins').textContent = totalCoins;
-                checkMissionStatus();
-            } else {
-                alert('Please log in');
-                window.location.href = 'login.html';
-            }
-        }
+        const token = localStorage.getItem('token');
+        const backendUrl = 'https://click-swap-backend.onrender.com';
 
         async function checkMissionStatus() {
-            const token = localStorage.getItem('token');
-            const response = await fetch('/api/missions/status', {
-                method: 'GET',
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            const status = await response.json();
-            if (status.dailyLoginCompleted) {
-                document.getElementById('daily-login-btn').disabled = true;
-                document.getElementById('daily-login-status').textContent = 'Completed for today!';
-            }
-            if (status.videoWatched) {
-                document.getElementById('video-watch-btn').disabled = true;
-                document.getElementById('video-watch-status').textContent = 'Video watched!';
-            }
-            document.getElementById('click-streak-status').textContent = `Current clicks: ${status.clickCount}/100`;
-            if (status.clickStreakCompleted) {
-                document.getElementById('click-streak-btn').disabled = true;
-                document.getElementById('click-streak-status').textContent += ' - Completed!';
-            }
-        }
-
-        async function claimDailyLogin() {
-            const token = localStorage.getItem('token');
-            const response = await fetch('/api/missions/daily-login', {
-                method: 'POST',
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            const result = await response.json();
-            if (result.success) {
-                totalCoins = result.coins;
-                document.getElementById('total-coins').textContent = totalCoins;
-                document.getElementById('daily-login-btn').disabled = true;
-                document.getElementById('daily-login-status').textContent = result.message;
-            } else {
-                alert(result.message);
-            }
-        }
-
-        async function watchVideo() {
-            const token = localStorage.getItem('token');
             if (!token) {
                 alert('Please log in');
                 window.location.href = 'login.html';
                 return;
             }
-
-            // Show ad container
-            const adContainer = document.getElementById('video-ad-container');
-            adContainer.style.display = 'block';
-            document.getElementById('video-watch-btn').disabled = true;
-
-            // Initialize AdSense ad
             try {
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            } catch (e) {
-                console.error('AdSense error:', e);
-                alert('Failed to load ad. Please try again.');
-                adContainer.style.display = 'none';
-                document.getElementById('video-watch-btn').disabled = false;
-                return;
+                const response = await fetch(`${backendUrl}/api/missions/status`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    const btn = document.getElementById('watch-video-btn');
+                    const status = document.getElementById('video-status');
+                    if (data.videoWatched) {
+                        btn.disabled = true;
+                        status.textContent = 'Video already watched today!';
+                    } else {
+                        btn.disabled = false;
+                        status.textContent = 'Ready to watch!';
+                        btn.onclick = startVideoMission;
+                    }
+                } else {
+                    alert(data.message || 'Error fetching mission status');
+                }
+            } catch (err) {
+                console.error('Mission status error:', err);
+                alert('Network error');
             }
+        }
 
-            // Simulate ad interaction (replace with actual impression/click tracking if needed)
-            setTimeout(async () => {
-                const response = await fetch('/api/missions/watch-video', {
+        async function startVideoMission() {
+            const btn = document.getElementById('watch-video-btn');
+            btn.disabled = true;
+            btn.textContent = 'Watching...';
+            await new Promise(resolve => setTimeout(resolve, 5000)); // Simulate 5s ad
+            try {
+                const response = await fetch(`${backendUrl}/api/missions/watch-video`, {
                     method: 'POST',
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
-                const result = await response.json();
-                if (result.success) {
-                    totalCoins = result.coins;
-                    document.getElementById('total-coins').textContent = totalCoins;
-                    document.getElementById('video-watch-btn').disabled = true;
-                    document.getElementById('video-watch-status').textContent = 'Ad viewed!';
-                    adContainer.style.display = 'none';
+                const data = await response.json();
+                if (response.ok && data.success) {
+                    alert(data.message);
+                    const status = document.getElementById('video-status');
+                    status.textContent = 'Video watched! 100 coins earned!';
+                    showCoinAnimation();
                 } else {
-                    alert(result.message);
-                    document.getElementById('video-watch-btn').disabled = false;
-                    adContainer.style.display = 'none';
+                    alert(data.message || 'Error completing mission');
+                    btn.disabled = false;
+                    btn.textContent = 'Watch Video';
                 }
-            }, 5000); // Simulate 5-second ad display
-        }
-
-        async function checkClickStreak() {
-            const token = localStorage.getItem('token');
-            const response = await fetch('/api/missions/click-streak', {
-                method: 'POST',
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            const result = await response.json();
-            document.getElementById('click-streak-status').textContent = `Current clicks: ${result.clickCount}/100`;
-            if (result.success) {
-                totalCoins = result.coins;
-                document.getElementById('total-coins').textContent = totalCoins;
-                document.getElementById('click-streak-btn').disabled = true;
-                document.getElementById('click-streak-status').textContent += ' - Completed!';
+            } catch (err) {
+                console.error('Video mission error:', err);
+                alert('Network error');
+                btn.disabled = false;
+                btn.textContent = 'Watch Video';
             }
         }
 
-        // Initialize
-        fetchUserData();
+        function showCoinAnimation() {
+            const container = document.getElementById('video-ad-container');
+            const anim = document.createElement('div');
+            anim.className = 'plus-one';
+            anim.textContent = '+100';
+            container.appendChild(anim);
+            setTimeout(() => anim.remove(), 800);
+        }
+
+        async function buyBoost() {
+            if (!token) {
+                alert('Please log in');
+                window.location.href = 'login.html';
+                return;
+            }
+            try {
+                const response = await fetch(`${backendUrl}/api/purchase`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ item: 'double_coins', amount: 200 })
+                });
+                const data = await response.json();
+                if (response.ok && data.success) {
+                    window.location.href = data.paymentUrl; // Redirect to Paystack
+                } else {
+                    alert(data.message || 'Purchase failed');
+                }
+            } catch (err) {
+                console.error('Purchase error:', err);
+                alert('Network error');
+            }
+        }
+
+        checkMissionStatus();
     </script>
 </body>
 </html>
